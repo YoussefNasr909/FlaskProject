@@ -1,0 +1,37 @@
+{% extends "default.html" %}
+{% block body %}
+<section class="fac">
+    <h1 id="faculties">Faculties We Offer</h1>
+    <p>Assiut National University in New Assiut City presents many distinguished academic programs during the upcoming academic year through (Engineering, Medical, Humanities and Social Sciences)</p>
+    <div class="row">
+        <div class="fac-col col-12 col-md-4 d-flex flex-column justify-content-between align-items-center text-center p-3" style="min-height: 400px;">
+            <div>
+                <h3>Faculty of Computers & Artificial Intelligence</h3>
+                <p>We believe that software and information technology is the future, hence we have recruited our knowledge in the fields of information system and automation mechanisms to serve our beliefs.</p>
+            </div>
+            <img src="{{ url_for('static', filename='images/computer.jpeg') }}" alt="Computers & AI" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid #ccc; border-radius: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;" class="faculty-img">
+        </div>
+        <div class="fac-col col-12 col-md-4 d-flex flex-column justify-content-between align-items-center text-center p-3" style="min-height: 400px;">
+            <div>
+                <h3>Faculty of Medicine</h3>
+                <p>Faculty of Medicine at Assiut University stands out as a leading establishment for medical education in Upper Egypt</p>
+            </div>
+            <img src="{{ url_for('static', filename='images/med.png') }}" alt="Medicine" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid #ccc; border-radius: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;" class="faculty-img">
+        </div>
+        <div class="fac-col col-12 col-md-4 d-flex flex-column justify-content-between align-items-center text-center p-3" style="min-height: 400px;">
+            <div>
+                <h3>Faculty of Engineering & Applied Sciences</h3>
+                <p>63 years of experience and excellence in Engineering academic fields including Electrical Engineering, Civil Engineering, Mechanical Engineering, Architectural Engineering, and Mining and Metallurgical Engineering</p>
+            </div>
+            <img src="{{ url_for('static', filename='images/eng.jpg') }}" alt="Engineering" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid #ccc; border-radius: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease;" class="faculty-img">
+        </div>
+    </div>
+</section>
+
+<style>
+    .faculty-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}
