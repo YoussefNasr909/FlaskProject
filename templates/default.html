@@ -40,6 +40,7 @@
                 </ul>
                 <div class="d-flex">
                     {% if session.user %}
+                        <span class="navbar-text me-3">Welcome {{ session.username }}</span>
                         <a href="{{url_for('logout')}}"><button class="btn btn-outline-primary me-1">Logout</button></a>
                     {% else %}
                         <a href="{{url_for('login')}}"><button class="btn btn-outline-primary me-1">Login</button></a>
@@ -59,11 +60,14 @@
     {% endif %}
     {% endwith %}
     <main class="container pt-5">
+        {% if session.user %}
+        <div style="font-size: small; margin-bottom: 10px;">
+        </div>
+        {% endif %}
         {% block body %}
         {% endblock %}
-    </main>
     <footer>
-        <p>© Assiut National University. All rights reserved 2025 </p>
+        <p> © Assiut National University. All rights reserved 2025 </p>
     </footer>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.bundle.min.js') }}"></script>
