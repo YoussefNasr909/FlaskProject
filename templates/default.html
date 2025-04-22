@@ -8,15 +8,42 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/icons/all.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     {% if cssFile%}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/' + cssFile)}}">
     {% endif %}
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">ANU</a>
+    <!-- Header with top bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="top-contact">
+                        <span><i class="fas fa-envelope"></i> info@anu.edu</span>
+                        <span><i class="fas fa-phone"></i> +20 123 456 7890</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="top-social">
+                        <a href="https://www.facebook.com/AssuitANU"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{url_for('index')}}">
+                <span class="university-logo">ANU</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -26,7 +53,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Home</a>
+                        <a class="nav-link" aria-current="page" href="{{url_for('index')}}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('about')}}">About</a>
@@ -35,43 +62,137 @@
                         <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('faculties')}}">faculties</a>
+                        <a class="nav-link" href="{{url_for('faculties')}}">Faculties</a>
                     </li>
                 </ul>
                 <div class="d-flex">
                     {% if session.user %}
-                        <span class="navbar-text me-3">Welcome {{ session.username }}</span>
-                        <a href="{{url_for('logout')}}"><button class="btn btn-outline-primary me-1">Logout</button></a>
+                        <div class="user-welcome">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="navbar-text me-3">Welcome, {{ session.user }}</span>
+                        </div>
+                        <a href="{{url_for('logout')}}" class="btn btn-outline-primary">Logout</a>
                     {% else %}
-                        <a href="{{url_for('login')}}"><button class="btn btn-outline-primary me-1">Login</button></a>
-                        <a href="{{url_for('register')}}"><button class="btn btn-primary">Sign Up</button></a>
+                        <a href="{{url_for('login')}}" class="btn btn-secondary me-2">Login</a>
+                        <a href="{{url_for('register')}}" class="btn btn-secondary me-2">Sign Up</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
-    {% with messages = get_flashed_messages(with_categories=True)%}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{category}} fade show" role="alert">
-        {{message}}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <main class="container pt-5">
-        {% if session.user %}
-        <div style="font-size: small; margin-bottom: 10px;">
+
+    <!-- Flash Messages -->
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=True)%}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}} fade show" role="alert">
+            <div class="container">
+                <div class="alert-content">
+                    <i class="alert-icon fas {% if category == 'success' %}fa-check-circle{% elif category == 'danger' %}fa-exclamation-circle{% elif category == 'warning' %}fa-exclamation-triangle{% else %}fa-info-circle{% endif %}"></i>
+                    <span>{{message}}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
         </div>
+        {% endfor %}
         {% endif %}
-        {% block body %}
-        {% endblock %}
-    <footer>
-        <p> © Assiut National University. All rights reserved 2025 </p>
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container pt-4 pb-5">
+            {% if session.user %}
+            <div class="user-status">
+                <small>Logged in as: {{ session.user }}</small>
+            </div>
+            {% endif %}
+            
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-about">
+                        <h3>About ANU</h3>
+                        <p>Assiut National University is dedicated to excellence in education, research, and community service.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="{{url_for('index')}}">Home</a></li>
+                            <li><a href="{{url_for('about')}}">About</a></li>
+                            <li><a href="{{url_for('faculties')}}">Faculties</a></li>
+                            <li><a href="{{url_for('contact')}}">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Assiut University Campus, Assiut, Egypt</p>
+                        <p><i class="fas fa-phone"></i> +20 123 456 7890</p>
+                        <p><i class="fas fa-envelope"></i> info@anu.edu</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© Assiut National University. All rights reserved 2025</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/icons/all.min.js') }}"></script>
+    <script>
+        // Activate current nav item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+    </script>
 </body>
 
 </html>
